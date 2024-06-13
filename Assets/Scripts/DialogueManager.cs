@@ -7,12 +7,18 @@ public class DialogueManager : MonoBehaviour
 {
     public TextMeshProUGUI  dialogueText; // UI Text элемент для отображения диалогов
     public Button nextButton; // Кнопка для перехода к следующему диалогу
-
+    public Button nextScene;
+    
     private string[] dialogues; // Массив строк с диалогами
     private int currentDialogueIndex; // Индекс текущего диалога
 
     void Start()
     {
+        if (nextScene)
+        {
+            nextScene.gameObject.SetActive(false);
+        }
+        
         // Пример диалогов
         if (SceneManager.GetActiveScene().name == "Station")
         {
@@ -82,11 +88,12 @@ public class DialogueManager : MonoBehaviour
             // Когда все диалоги показаны, скрываем диалоговое окно или делаем переход на следующую сцену
             dialogueText.text = "Диалоги закончились.";
             nextButton.gameObject.SetActive(false);
+            nextScene.gameObject.SetActive(true);
         }
     }
 
     // Метод, вызываемый при нажатии на кнопку "Next"
-    public void NextDialogue()
+    private void NextDialogue()
     {
         currentDialogueIndex++;
         ShowDialogue();
